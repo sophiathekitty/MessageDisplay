@@ -43,20 +43,6 @@ namespace MessageWindowSystem
         // Start is called before the first frame update
         void Start()
         {
-            AddMessage("testing some stuff?");
-            AddMessage("still testing some stuff?");
-            AddMessage("yup.... testing some stuff?");
-            AddMessage("i hope this is testing some stuff?");
-            AddMessage("well now i'm testing some stuff?");
-            AddMessage("oh yeah we're testing some stuff?");
-            AddMessage("somebody is testing some stuff?");
-            AddMessage("even more testing some stuff?");
-            AddMessage("i guess i'm testing some stuff?");
-            AddMessage("why would i still be testing some stuff?");
-            AddMessage("this sitll isn't done i'm still testing some stuff?");
-            AddMessage("these are getting a bit long while i'm testing some stuff?");
-            AddMessage("yay i'm finally done testing some stuff?");
-
         }
 
         // Update is called once per frame

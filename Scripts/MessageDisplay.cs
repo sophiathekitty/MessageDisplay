@@ -129,12 +129,6 @@ namespace MessageWindowSystem
                 }
             }
 
-            if(textPro != null)
-            {
-                RectTransform rectTransform = GetComponent<RectTransform>();
-                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, textPro.textBounds.size.y + 2);
-            }
-
             if (!persistant)
             {
                 life_time -= Time.deltaTime;
