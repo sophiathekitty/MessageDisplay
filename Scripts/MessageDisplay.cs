@@ -15,6 +15,9 @@ namespace MessageWindowSystem
         public float life_time;
         public bool persistant = false;
         public float death_time = 5f;
+        public MessageContent message;
+        public MessageWindow window;
+        private MessageType _type;
 
         private Animator animator;
 
@@ -68,8 +71,20 @@ namespace MessageWindowSystem
                 return null;
             }
         }
+        public void ApplyMessage(MessageContent content)
+        {
+            message = content;
+            title = content.title;
+            text = content.text;
+            icon = content.icon;
+            life_time = content.display_time;
+            ApplyType(content.type);
+        }
         public void ApplyType(MessageType type)
         {
+            if (_type == type)
+                return;
+            _type = type;
             if (textBasic != null)
                 textBasic.color = type.text_color;
             if (textPro != null)
@@ -78,7 +93,10 @@ namespace MessageWindowSystem
             {
                 image.color = type.icon_color;
                 if (image.sprite == null)
-                    image.sprite = type.default_icon;
+                {
+                    icon = type.default_icon;
+                    Debug.Log(image.sprite);
+                }
             }
             if (type.display_time == 0)
                 persistant = true;
@@ -97,6 +115,26 @@ namespace MessageWindowSystem
         // Update is called once per frame
         void Update()
         {
+            if(message != null)
+            {
+                title = message.title;
+                text = message.text;
+                if(message.icon != null)
+                    icon = message.icon;
+                //if (image != null)
+                    //image.gameObject.SetActive(image.sprite == null);
+                if (message.type != null)
+                {
+                    ApplyType(message.type);
+                }
+            }
+
+            if(textPro != null)
+            {
+                RectTransform rectTransform = GetComponent<RectTransform>();
+                rectTransform.sizeDelta = new Vector2(rectTransform.sizeDelta.x, textPro.textBounds.size.y + 2);
+            }
+
             if (!persistant)
             {
                 life_time -= Time.deltaTime;
@@ -113,6 +151,8 @@ namespace MessageWindowSystem
         IEnumerator SelfDestruct()
         {
             yield return new WaitForSeconds(death_time);
+            window = transform.parent.GetComponent<MessageWindow>();
+            window.messages.Remove(this);
             Destroy(gameObject);
         }
     }
