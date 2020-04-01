@@ -12,6 +12,7 @@ namespace MessageWindowSystem
         public MessageType type;
         public float priority = 0.5f;
         public bool active = true;
+        public Dictionary<string, object> data;
 
         public float display_time
         {
@@ -26,39 +27,73 @@ namespace MessageWindowSystem
 
         public MessageContent(string _title, string _text, MessageType _type)
         {
-            title = _title;
-            text = _text;
-            type = _type;
-            icon = _type.default_icon;
+            SetContent(_text, _title, null, _type);
         }
         public MessageContent(string _text, MessageType _type)
         {
-            text = _text;
-            type = _type;
-            icon = _type.default_icon;
+            SetContent(_text, "", null, _type);
         }
         public MessageContent(string _text)
         {
-            text = _text;
+            SetContent(_text);
+        }
+        public MessageContent(string _text, string _title)
+        {
+            SetContent(_text, _title);
+        }
+        public MessageContent(string _text, string _title, Sprite _icon)
+        {
+            SetContent(_text, _title, _icon);
+        }
+        public MessageContent(Sprite _icon, string _title, string _text, MessageType _type)
+        {
+            SetContent(_text, _title, _icon, _type);
+        }
+        public MessageContent(Sprite _icon, string _text, MessageType _type)
+        {
+            SetContent(_text, "", _icon, _type);
+        }
+        public MessageContent(Sprite _icon, string _text)
+        {
+            SetContent(_text, "", _icon);
+        }
+        public MessageContent(string _title, string _text, MessageType _type, Dictionary<string,object> _data)
+        {
+            SetContent(_text, _title, null, _type);
+            data = _data;
+        }
+        public MessageContent(string _text, MessageType _type, Dictionary<string, object> _data)
+        {
+            SetContent(_text, "", null, _type);
+            data = _data;
+        }
+        public MessageContent(string _text, Dictionary<string, object> _data)
+        {
+            SetContent(_text);
+            data = _data;
+        }
+        public MessageContent(Sprite _icon, string _title, string _text, MessageType _type, Dictionary<string, object> _data)
+        {
+            SetContent(_text, _title, _icon, _type);
+            data = _data;
+        }
+        public MessageContent(Sprite _icon, string _text, MessageType _type, Dictionary<string, object> _data)
+        {
+            SetContent(_text, "", _icon, _type);
+            data = _data;
+        }
+        public MessageContent(Sprite _icon, string _text, Dictionary<string, object> _data)
+        {
+            SetContent(_text, "", _icon);
+            data = _data;
         }
 
-        public MessageContent(Sprite _icon, string _title, string _text, MessageType _type)
+        void SetContent(string _text, string _title = "", Sprite _icon = null, MessageType _type = null)
         {
             icon = _icon;
             title = _title;
             text = _text;
             type = _type;
-        }
-        public MessageContent(Sprite _icon, string _text, MessageType _type)
-        {
-            icon = _icon;
-            text = _text;
-            type = _type;
-        }
-        public MessageContent(Sprite _icon, string _text)
-        {
-            icon = _icon;
-            text = _text;
         }
 
     }

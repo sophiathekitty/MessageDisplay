@@ -11,8 +11,13 @@ namespace MessageWindowSystem
 
         public List<MessageContent> pendingMessages = new List<MessageContent>();
         public int max_messages = 5;
+        public bool queue_messages = true;
 
-
+        public MessageContent AddMessage(MessageContent message)
+        {
+            pendingMessages.Add(message);
+            return message;
+        }
         public MessageContent AddMessage(string text, Sprite icon = null)
         {
             return AddMessage(text,"", type, icon);
@@ -27,19 +32,22 @@ namespace MessageWindowSystem
         }
         public MessageContent AddMessage(string text, string title, MessageType messageType, Sprite icon = null)
         {
-            MessageContent msg = new MessageContent(icon, title, text, messageType);
-            pendingMessages.Add(msg);
-            return msg;
+            return AddMessage(new MessageContent(icon, title, text, messageType));
+            //pendingMessages.Add(msg);
+            //return msg;
         }
         void SpawnMessage(MessageContent msg) { 
-            GameObject gameObject = Instantiate(type.prefab, transform);
+            GameObject gameObject = Instantiate(msg.type.prefab, transform);
             MessageDisplay message = gameObject.GetComponent<MessageDisplay>();
             message.ApplyMessage(msg);
             pendingMessages.Remove(msg);
             messages.Add(message);
             message.window = this;
         }
-
+        void RemoveMessage(MessageDisplay msg)
+        {
+            msg.life_time = 0;
+        }
         // Start is called before the first frame update
         void Start()
         {
@@ -48,8 +56,20 @@ namespace MessageWindowSystem
         // Update is called once per frame
         void Update()
         {
-            if (pendingMessages.Count > 0 && messages.Count < max_messages)
-                SpawnMessage(pendingMessages[0]);
+            if (queue_messages)
+            {
+                if (pendingMessages.Count > 0 && messages.Count < max_messages)
+                    SpawnMessage(pendingMessages[0]);
+            }
+            else
+            {
+                if(pendingMessages.Count > 0)
+                {
+                    if (messages.Count >= max_messages)
+                        RemoveMessage(messages[0]);
+                    SpawnMessage(pendingMessages[0]);
+                }
+            }
         }
     }
 }

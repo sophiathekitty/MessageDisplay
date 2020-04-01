@@ -128,6 +128,11 @@ namespace MessageWindowSystem
                     ApplyType(message.type);
                 }
             }
+            if (!message.active)
+            {
+                life_time = 0;
+                persistant = false;
+            }
 
             if (!persistant)
             {
