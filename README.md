@@ -5,4 +5,4 @@ can display simple messages with text, title, and icon. messages can be queued s
 
 MessageContent can also store data (Dictionary<string,object>) for custom display scripts to display more complex messages.
 
-requires TextMeshPro.
+requires TextMeshPro and https://github.com/sophiathekitty/InGameCommandConsole because the sample scene includes that.
